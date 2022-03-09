@@ -1,0 +1,38 @@
+circles:
+  - name: circle-1
+    backends:
+      - name: influxdb-1-1
+        url: 'http://10.20.4.132:8086'
+        username: root
+        password: '123456'
+        auth_secure: false
+  - name: circle-2
+    backends:
+      - name: influxdb-2-1
+        url: 'http://10.20.1.100:8086'
+        username: root
+        password: '123456'
+        auth_secure: false
+listen_addr: '0.0.0.0:7076'
+db_list: []
+data_dir: data
+tlog_dir: log
+hash_key: idx
+flush_size: 10000
+flush_time: 1
+check_interval: 1
+rewrite_interval: 10
+conn_pool_size: 20
+write_timeout: 10
+idle_timeout: 10
+username: ''
+password: ''
+auth_secure: false
+write_tracing: true
+query_tracing: true
+https_enabled: false
+https_cert: ''
+https_key: ''
+udp_enable: true
+udp_bind: '0.0.0.0:8076'
+udp_database: msp
