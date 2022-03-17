@@ -3,16 +3,17 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"log"
 	"net/http"
 	"os"
 	"runtime"
 	"time"
 
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	metrics "github.com/slok/go-http-metrics/metrics/prometheus"
 	"github.com/slok/go-http-metrics/middleware"
 	"github.com/slok/go-http-metrics/middleware/std"
+
 	"github.com/RedTimeDB/RedTimeProxy/backend"
 	"github.com/RedTimeDB/RedTimeProxy/service"
 	"github.com/RedTimeDB/RedTimeProxy/util"
@@ -81,6 +82,24 @@ func main() {
 			log.Panicf("error while serving metrics: %s", err)
 		}
 	}()
+
+	//判断是否开启MQTT监听
+	if cfg.MQTTEnable {
+		go func() {
+			col, err := service.NewMQTTService(cfg)
+			if err != nil {
+				log.Fatalln(err)
+			}
+			c := col.Collect()
+			for {
+				select {
+				case msg := <-c:
+					//log.Println(msg)
+					col.WriteMQTT(msg)
+				}
+			}
+		}()
+	}
 
 	mdlw := middleware.New(middleware.Config{
 		Recorder: metrics.NewRecorder(metrics.Config{}),

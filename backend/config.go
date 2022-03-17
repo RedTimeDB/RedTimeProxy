@@ -37,6 +37,20 @@ type CircleConfig struct {
 	Backends []*Config `json:"backends" yaml:"backends"`
 }
 
+type MQTTConfig struct {
+	Server     string `yaml:"server"`
+	TopicPath  string `yaml:"topic_path"`
+	User       string `yaml:"user"`
+	Password   string `yaml:"password"`
+	QoS        byte   `yaml:"qos"`
+	CACert     string `yaml:"ca_cert"`
+	ClientCert string `yaml:"client_cert"`
+	ClientKey  string `yaml:"client_key"`
+	ClientID   string `yaml:"client_id"`
+	Db         string `yaml:"db"`
+	Precision  string `yaml:"precision"`
+}
+
 type ProxyConfig struct {
 	Circles         []*CircleConfig `json:"circles" yaml:"circles"`
 	ListenAddr      string          `json:"listen_addr" yaml:"listen_addr"`
@@ -64,6 +78,8 @@ type ProxyConfig struct {
 	UDPDataBase     string          `json:"udp_database" yaml:"udp_database"`
 	UDPPoolSize     int             `json:"udp_pool_size" yaml:"udp_pool_size"`
 	UDPPrecision    string          `json:"udp_precision" yaml:"udp_precision"`
+	MQTTEnable      bool            `yaml:"mqtt_enable"`
+	MQTT            *MQTTConfig     `json:"mqtt" yaml:"mqtt"`
 }
 
 // NewFileConfig is create a config from file

@@ -36,3 +36,16 @@ https_key: ''
 udp_enable: true
 udp_bind: '0.0.0.0:8076'
 udp_database: msp
+mqtt_enable: false
+mqtt:
+  # The MQTT broker to connect to
+  server: tcp://127.0.0.1:1883
+  # Optional: Username and Password for authenticating with the MQTT Server
+  user: emqx
+  password: public
+  # The Topic path to subscribe to. Be aware that you have to specify the wildcard.
+  topic: "#"
+  # The MQTT QoS level
+  qos: 0
+  db: mqttproxy
+  #precision: ns
